@@ -1,0 +1,49 @@
+CREATE TABLE Pelanggan (
+    id_pelanggan INT PRIMARY KEY AUTO_INCREMENT,
+    nama VARCHAR(100) NOT NULL,
+    alamat VARCHAR(255),
+    nomor_telepon VARCHAR(15),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Layanan (
+    id_layanan INT PRIMARY KEY AUTO_INCREMENT,
+    nama_layanan VARCHAR(100) NOT NULL,
+    harga_per_kg DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE Pesanan (
+    id_pesanan INT PRIMARY KEY AUTO_INCREMENT,
+    id_pelanggan INT,
+    tanggal_pesanan DATE NOT NULL,
+    tanggal_selesai DATE,
+    status VARCHAR(20),
+    total_biaya DECIMAL(10, 2),
+    FOREIGN KEY (id_pelanggan) REFERENCES Pelanggan(id_pelanggan)
+);
+
+CREATE TABLE Pembayaran (
+    id_pembayaran INT PRIMARY KEY AUTO_INCREMENT,
+    id_pesanan INT,
+    tanggal_pembayaran DATE NOT NULL,
+    jumlah_bayar DECIMAL(10, 2) NOT NULL,
+    metode_pembayaran VARCHAR(50),
+    FOREIGN KEY (id_pesanan) REFERENCES Pesanan(id_pesanan)
+);
+
+CREATE TABLE Detil_Pesanan (
+    id_detil INT PRIMARY KEY AUTO_INCREMENT,
+    id_pesanan INT,
+    id_layanan INT,
+    jumlah FLOAT NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_pesanan) REFERENCES Pesanan(id_pesanan),
+    FOREIGN KEY (id_layanan) REFERENCES Layanan(id_layanan)
+);
+
+CREATE TABLE Karyawan (
+    id_karyawan INT PRIMARY KEY AUTO_INCREMENT,
+    nama_karyawan VARCHAR(100) NOT NULL,
+    jabatan VARCHAR(50),
+    nomor_telepon VARCHAR(15)
+);
